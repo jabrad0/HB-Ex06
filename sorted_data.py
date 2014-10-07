@@ -1,12 +1,31 @@
-ratings = open("scores.txt")
-restaurants = {}
+def create_dictionary(filename):
 
-for line in ratings:
-    name, rating = line.rstrip().split(":")
-    restaurants[name] = rating
+    ratings = open(filename)
+    restaurants = {}
 
-rest_list = restaurants.keys()
-rest_list.sort()
+    for line in ratings:
+        name, rating = line.rstrip().split(":")
+        restaurants[name] = rating
 
-for item in rest_list:
-    print "Restaurant %s is rated at %s" % (item, restaurants[item])
+    ratings.close()
+
+    return restaurants
+
+
+def sort_and_print(filename):
+
+    input_dict = create_dictionary(filename)
+
+    rest_list = input_dict.keys()
+    rest_list.sort()
+
+    for item in rest_list:
+        print "Restaurant %s is rated at %s" % (item, input_dict[item])
+
+
+def main():
+
+    sort_and_print("scores.txt")
+
+if __name__ == "__main__":
+    main()
