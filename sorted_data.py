@@ -1,31 +1,27 @@
-def create_dictionary(filename):
+from sys import argv
 
-    ratings = open(filename)
-    restaurants = {}
+def build_dictionary(opened_file):
+    ratings = {}
 
-    for line in ratings:
-        name, rating = line.rstrip().split(":")
-        restaurants[name] = rating
+    for line in opened_file:
+        line = line.rstrip().split(':')
+        ratings[line[0]] = line[1]
+    return ratings
 
-    ratings.close()
-
-    return restaurants
-
-
-def sort_and_print(filename):
-
-    input_dict = create_dictionary(filename)
-
-    rest_list = input_dict.keys()
-    rest_list.sort()
-
-    for item in rest_list:
-        print "Restaurant %s is rated at %s" % (item, input_dict[item])
+def sortandprint(opened_file):
+    input_dictionary = build_dictionary(opened_file)
+    
+    sorted_rest_ratings = sorted(input_dictionary)
+    for name in sorted_rest_ratings:
+        print 'Restaurant %s is rated at %s' % (name, input_dictionary[name])
 
 
 def main():
+    script, filename = argv
+    opened_file = open(filename, 'r')
+    sortandprint(opened_file)
 
-    sort_and_print("scores.txt")
+    opened_file.close()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
